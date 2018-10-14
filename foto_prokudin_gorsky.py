@@ -41,7 +41,7 @@ for i in range(-15, 15):
     for j in range(-15, 15):
         bc = numpy.roll(bc, j, 1)
         corij = (bc*g).sum()
-        if corij >= cor:
+        if corij > cor:
             iib = i
             jjb = j
             cor = corij
@@ -63,7 +63,7 @@ for i in range(-15, 15):
     for j in range(-15, 15):
         rc = numpy.roll(rc, j, 1)
         corij = (rc*g).sum()
-        if corij >= cor:
+        if corij > cor:
             iir = i
             jjr = j
             cor = corij
