@@ -34,37 +34,42 @@ img_comin = dstack((r, g, b))
 imsave('out_img.png', img_comin)
 
 # совмещение с учётом корреляции
+
+# синий и зелёный каналы
 cor = 0
 iib = 0
 jjb = 0
 bc = b.copy()
-for i in range(-15, 15):
+for i in range(25, -25, -1):
     bc = numpy.roll(bc, i, 0)
-    for j in range(-15, 15):
+    for j in range(25, -25, -1):
         bc = numpy.roll(bc, j, 1)
         corij = (bc*g).sum()
         if corij > cor:
             iib = i
             jjb = j
             cor = corij
+            print(corij)
 print(iib, jjb)
 b = numpy.roll(b, iib, 0)
 b = numpy.roll(b, jjb, 1)
 imsave('b_obr2.png', b)
 
+# красный и зелёный каналы
 cor = 0
 iir = 0
 jjr = 0
 rc = r.copy()
-for i in range(-15, 15):
+for i in range(25, -25, -1):
     rc = numpy.roll(rc, i, 0)
-    for j in range(-15, 15):
+    for j in range(25, -25, -1):
         rc = numpy.roll(rc, j, 1)
         corij = (rc*g).sum()
         if corij > cor:
             iir = i
             jjr = j
             cor = corij
+            print(corij)
 print(iir, jjr)
 r = numpy.roll(r, iir, 0)
 r = numpy.roll(r, jjr, 1)
