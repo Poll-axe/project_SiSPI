@@ -39,9 +39,9 @@ iib = 0
 jjb = 0
 bc = b.copy()
 for i in range(-15, 15):
-    bc = numpy.roll(b, i, 0)
+    bc = numpy.roll(bc, i, 0)
     for j in range(-15, 15):
-        bc = numpy.roll(b, j, 1)
+        bc = numpy.roll(bc, j, 1)
         corij = (bc*g).sum()
         if corij > cor:
             iib = i
@@ -57,9 +57,9 @@ iir = 0
 jjr = 0
 rc = r.copy()
 for i in range(-15, 15):
-    rc = numpy.roll(r, i, 0)
+    rc = numpy.roll(rc, i, 0)
     for j in range(-15, 15):
-        rc = numpy.roll(r, j, 1)
+        rc = numpy.roll(rc, j, 1)
         corij = (rc*g).sum()
         if corij > cor:
             iir = i
