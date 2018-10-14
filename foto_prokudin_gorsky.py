@@ -9,7 +9,6 @@ img = imread('02.png')
 imgf = img_as_float(img)
 height = img.shape[0]
 weight = img.shape[1]
-print(weight, height)
 
 # разделение на каналы
 hm = height//3
@@ -19,13 +18,9 @@ g = imgf[hm:2*hm, :]
 r = imgf[2*hm:height, :]
 
 # обрезка по крааям
-b = b[int(hm*0.10):int(hm*0.90), int(wm*0.10):int(wm*0.90)]
-g = g[int(hm*0.10):int(hm*0.90), int(wm*0.10):int(wm*0.90)]
-r = r[int(hm*0.10):int(hm*0.90), int(wm*0.10):int(wm*0.90)]
-
-# совмещение на пофиг
-img_comin = dstack((r, g, b))
-imsave('out_img.png', img_comin)
+b = b[int(hm*0.05):int(hm*0.9), int(wm*0.05):int(wm*0.95)]
+g = g[int(hm*0.05):int(hm*0.9), int(wm*0.05):int(wm*0.95)]
+r = r[int(hm*0.05):int(hm*0.9), int(wm*0.05):int(wm*0.95)]
 
 # совмещение с учётом корреляции
 
@@ -45,12 +40,9 @@ for i in range(-15, 16):
             iib = i
             jjb = j
             cor = corij
-            print(corij, i, j)
     bc = bc2
-print(iib, jjb)
 b = numpy.roll(b, iib, 0)
 b = numpy.roll(b, jjb, 1)
-imsave('b_obr2.png', b)
 
 # красный и зелёный
 cor = 0
@@ -68,12 +60,9 @@ for i in range(-15, 16):
             iir = i
             jjr = j
             cor = corij
-            print(corij, i, j)
     rc = rc2
-print(iir, jjr)
 r = numpy.roll(r, iir, 0)
 r = numpy.roll(r, jjr, 1)
-imsave('r_obr2.png', r)
 
 
 img_comin = dstack((r, g, b))
