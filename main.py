@@ -1,5 +1,5 @@
 import random
-from PIL import Image, ImageDraw  # Подключим необходимые библиотеки.
+from PIL import Image, ImageDraw
 
 image = Image.open("file.JPG")  # Открываем изображение.
 draw = ImageDraw.Draw(image)  # Создаем инструмент для рисования.
