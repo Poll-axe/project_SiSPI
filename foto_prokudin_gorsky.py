@@ -28,18 +28,20 @@ img_comin = dstack((r, g, b))
 imsave('out_img.png', img_comin)
 
 # совмещение с учётом корреляции
+
+# синий и зелёный
 cor = 0
 iib = 0
 jjb = 0
 bc = b.copy()
 bc2 = b.copy()
 bc3 = b.copy()
-for i in range(25, -25, -1):
+for i in range(-15, 15):
     bc = numpy.roll(bc, i, 0)
-    for j in range(25, -25, -1):
+    for j in range(-15, 15):
         bc = numpy.roll(bc, j, 1)
         corij = (bc*g).sum()
-        if corij > cor:
+        if corij >= cor:
             iib = i
             jjb = j
             cor = corij
@@ -49,18 +51,19 @@ b = numpy.roll(b, iib, 0)
 b = numpy.roll(b, jjb, 1)
 imsave('b_obr2.png', b)
 
+# красный и зелёный
 cor = 0
 iir = 0
 jjr = 0
 rc = r.copy()
 rc2 = r.copy()
 rc3 = r.copy()
-for i in range(-25, 25):
-    rc = numpy.roll(rc3, i, 0)
-    for j in range(-25, 25):
+for i in range(-15, 15):
+    rc = numpy.roll(rc, i, 0)
+    for j in range(-15, 15):
         rc = numpy.roll(rc, j, 1)
         corij = (rc*g).sum()
-        if corij > cor:
+        if corij >= cor:
             iir = i
             jjr = j
             cor = corij
