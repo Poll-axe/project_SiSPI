@@ -5,7 +5,7 @@ from skimage.io import imread, imsave
 from numpy import dstack
 
 # считывание и получение информации
-img = imread('03.png')
+img = imread('02.png')
 imgf = img_as_float(img)
 height = img.shape[0]
 weight = img.shape[1]
@@ -36,15 +36,16 @@ jjb = 0
 bc = b.copy()
 bc2 = b.copy()
 bc3 = b.copy()
-for i in range(-15, 15):
+for i in range(-15, 16):
     bc = numpy.roll(bc, i, 0)
-    for j in range(-15, 15):
-        bc = numpy.roll(bc, j, 1)
-        corij = (bc*g).sum()
-        if corij > cor:
+    for j in range(-15, 16):
+        bc3 = numpy.roll(bc, j, 1)
+        corij = (bc3*g).sum()
+        if corij >= cor:
             iib = i
             jjb = j
             cor = corij
+            print(corij, i, j)
     bc = bc2
 print(iib, jjb)
 b = numpy.roll(b, iib, 0)
@@ -58,15 +59,16 @@ jjr = 0
 rc = r.copy()
 rc2 = r.copy()
 rc3 = r.copy()
-for i in range(-15, 15):
+for i in range(-15, 16):
     rc = numpy.roll(rc, i, 0)
-    for j in range(-15, 15):
-        rc = numpy.roll(rc, j, 1)
-        corij = (rc*g).sum()
-        if corij > cor:
+    for j in range(-15, 16):
+        rc3 = numpy.roll(rc, j, 1)
+        corij = (rc3*g).sum()
+        if corij >= cor:
             iir = i
             jjr = j
             cor = corij
+            print(corij, i, j)
     rc = rc2
 print(iir, jjr)
 r = numpy.roll(r, iir, 0)
