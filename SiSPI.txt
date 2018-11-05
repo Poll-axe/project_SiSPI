@@ -1,0 +1,45 @@
+import matplotlib.pyplot
+import numpy
+
+def Spectr(a):
+    matplotlib.pyplot.hist(a, 100)
+    matplotlib.pyplot.show()
+
+
+def Mat(a):
+    sum = 0;
+    for i in range(len(a)):
+        sum += a[i];
+    return float(sum / len(a))
+
+
+def Disp(a):
+    Mat_a = Mat(a)
+    sum = 0
+    for i in range(len(a)):
+        sum += (a[i] - Mat_a) ** 2;
+    return float(sum / (len(a) - 1))
+
+
+def Cov(a, b):
+    sum = 0
+    for i in range(len(a)):
+        sum += (a[i]-Mat(a))*(b[i]-Mat(b))
+    return float(sum / (len(a)-1))
+
+
+def Calculation(a, b, c):
+    Mat_a = Mat(a)
+    Mat_b = Mat(b)
+    Mat_c = Mat(c)
+    Disp_a = Disp(a)
+    Disp_b = Disp(b)
+    Disp_c = Disp(c)
+
+
+a = numpy.random.randn(1000)
+b = numpy.random.randn(1000)
+print(Mat(a))
+print(Disp(a))
+print(Cov(a,b))
+Spectr(a)
