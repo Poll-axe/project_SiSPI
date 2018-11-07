@@ -1,14 +1,14 @@
-#import matplotlib.pyplot
+import matplotlib
 import numpy
 
 
-# def spectr(a):
-#     """
-#
-#     :param a:
-#     """
-#     matplotlib.pyplot.hist(a, 100)
-#     matplotlib.pyplot.show()
+def spectr(a):
+    """
+
+    :param a:
+    """
+    matplotlib.pyplot.hist(a, 100)
+    matplotlib.pyplot.show()
 
 
 def mat(a):
@@ -70,4 +70,4 @@ if __name__ == '__main__':
     print(mat(a))
     print(disp(a))
     print(cov(a, b))
-   # spectr(a)
+    spectr(a)
