@@ -38,7 +38,6 @@ flat_blue = blue.ravel()
 gray = (red + green + blue) / 3
 flat_gray = gray.ravel()
 truegrey = skimage.color.rgb2grey(imgf)
-"""
 
 print('ME red specter = ', stat.mean(flat_red))
 print('Dispersia red spectr = ', stat.variance(flat_red))
@@ -48,7 +47,7 @@ print('ME blue specter = ', stat.mean(flat_blue))
 print('Dispersia blue spectr = ', stat.variance(flat_blue))
 print('Cov matrix')
 print(np.cov([flat_red, flat_green, flat_blue]))
-"""
+
 spectr_razlozh(flat_red, 'red spectr')
 spectr_razlozh(flat_green, 'green spectr')
 spectr_razlozh(flat_blue, 'blue spectr')
