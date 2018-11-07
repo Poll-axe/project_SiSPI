@@ -1,17 +1,27 @@
-import random
+import statistics
+import skimage
 from PIL import Image, ImageDraw
+import numpy
+from skimage import img_as_float
+from skimage.io import imread, imsave
 
-image = Image.open("file.JPG")  # Открываем изображение.
-draw = ImageDraw.Draw(image)  # Создаем инструмент для рисования.
-width = image.size[0]  # Определяем ширину.
-height = image.size[1]  # Определяем высоту.
-pix = image.load()  # Выгружаем значения пикселей.
+# import functions
 
-for i in range(width):
-    for j in range(height):
-        a = pix[i, j][0]
-        b = pix[i, j][1]
-        c = pix[i, j][2]
-        draw.point((i, j), (255 - a, 255 - b, 255 - c))
-image.save("ans.jpg", "JPEG")
-del draw
+
+# считывание и получение информации
+img = imread('file.jpg')
+imgf = img_as_float(img)
+height = img.shape[0]
+weight = img.shape[1]
+
+# получение каналов изображения
+red = imgf[:, :, 0]
+green = imgf[:, :, 1]
+blue = imgf[:, :, 2]
+
+# получение яркости изображения
+gray = (red + green + blue) / 3
+truegrey = skimage.color.rgb2grey(imgf)
+
+odnom = red.ravel()
+print(statistics.mean(odnom))
