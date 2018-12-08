@@ -5,7 +5,20 @@ import statistics as stat
 import skimage
 from skimage import img_as_float
 from skimage.io import imread
-from PIL import Image, ImageDraw
+import cv2
+
+
+def resize(image, height, weight):
+    """
+
+    :return: изображение
+    :param image: изображение для ресайза
+    :param height:  высота
+    :param weight: ширина
+    """
+    dim = (weight, int(height))
+    #  третий параметр какой-то алгоритм масштабирования
+    return cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
 
 
 def spectr_razlozh(flat_array, name_title, data):
@@ -47,8 +60,6 @@ def analyz(img):
     pyp.tick_params(axis='both', labelleft=False,
                     labelright=False, labelbottom=False)
     pyp.show()
-    height = img.shape[0]
-    weight = img.shape[1]
 
     # получение каналов изображения
     red = imgf[:, :, 0]
@@ -104,8 +115,6 @@ def sravn_analyz(img1, img2):
     pyp.tick_params(axis='both', labelleft=False,
                     labelright=False, labelbottom=False)
     pyp.show()
-    height1 = img1.shape[0]
-    weight1 = img1.shape[1]
 
     # получение каналов изображения
     red1 = imgf1[:, :, 0]
@@ -124,8 +133,6 @@ def sravn_analyz(img1, img2):
     pyp.tick_params(axis='both', labelleft=False,
                     labelright=False, labelbottom=False)
     pyp.show()
-    height2 = img2.shape[0]
-    weight2 = img2.shape[1]
 
     # получение каналов изображения
     red2 = imgf2[:, :, 0]
@@ -176,6 +183,7 @@ def sravn_analyz(img1, img2):
 
     print('Ковариационная матрица красного спектра 2 изображений')
     string_red = 'Ковариационная матрица\n'
+
     COV_MATRIX_RED = np.cov([flat_red1, flat_red2])
     for string in range(COV_MATRIX_RED.__len__()):
         for item in range(COV_MATRIX_RED[string].__len__()):
@@ -193,6 +201,7 @@ def sravn_analyz(img1, img2):
             print("{0:.4f}".format(COV_MATRIX_GREEN[string][item]), end='    ')
         print()
         string_green += '\n'
+
     print('Ковариационная матрица синего спектра 2 изображений')
     string_blue = 'Ковариационная матрица\n'
     COV_MATRIX_BLUE = np.cov([flat_blue1, flat_blue2])
@@ -202,6 +211,7 @@ def sravn_analyz(img1, img2):
             print("{0:.4f}".format(COV_MATRIX_BLUE[string][item]), end='    ')
         print()
         string_blue += '\n'
+
     print('Ковариационная матрица')
     COV_MATRIX_BRIGHT = np.cov([flat_gray1, flat_gray2])
     string_bright = 'Ковариационная матрица спектра яркости 2 изображений\n'
@@ -211,6 +221,8 @@ def sravn_analyz(img1, img2):
             print("{0:.4f}".format(COV_MATRIX_BRIGHT[string][item]), end='    ')
         print()
         string_bright += '\n'
+
+    # круто, но нихера не понтно))
 
     data_red = "МО_1 = " + str(MO_RED1) + '\n' + 'Д_1 = ' + str(D_RED1) + "\nМО_2 = " + str(MO_RED2) + '\n' + 'Д_2 = ' + \
                str(D_RED2) + '\n' + string_red
@@ -248,7 +260,7 @@ def otvet():
 
 
 if __name__ == '__main__':
-    COMMAND = {'1': one_image, '2': one_cut_image, '3': two_image}
+    COMMAND = {'1': one_image, '2': one_cut_image, '3': two_image}  # чё это за извращение? )))
     answer = input('1.Обработка одного изображения\n'
                    '2.Обработка выделенной области изображения\n'
                    '3.Совместная обработка 2 изображений\n')
