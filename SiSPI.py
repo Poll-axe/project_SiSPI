@@ -76,29 +76,37 @@ def analyz(img):
     flat_gray = truegray.ravel()
     MO_RED = round(stat.mean(flat_red), 4)
     D_RED = round(stat.variance(flat_red), 4)
+
     MO_GREEN = round(stat.mean(flat_green), 4)
     D_GREEN = round(stat.variance(flat_green), 4)
+
     MO_BLUE = round(stat.mean(flat_blue), 4)
     D_BLUE = round(stat.variance(flat_blue), 4)
+
     print('Мат ожидание красного спектра = ', MO_RED)
     print('Дисперсия красного спектра = ', D_RED)
+
     print('Мат ожидание зеленого спектра = ', MO_GREEN)
     print('Дисперсия красного спектра = ', D_GREEN)
+
     print('Мат ожидание синего спектра = ', MO_BLUE)
     print('Дисперсия синего спектра = ', D_BLUE)
     print('Cov matrix')
+
     COV_MATRIX = np.cov([flat_red, flat_green, flat_blue])
     for string in range(COV_MATRIX.__len__()):
         for item in range(COV_MATRIX[string].__len__()):
             COV_MATRIX[string][item].__round__(4)
             print("{0:.4f}".format(COV_MATRIX[string][item]), end='    ')
         print()
+
     data_red = "МО = " + str(MO_RED) + '\n' + 'Д = ' + str(D_RED)
     data_green = "МО = " + str(MO_GREEN) + '\n' + 'Д = ' + str(D_GREEN)
     data_blue = "МО = " + str(MO_BLUE) + '\n' + 'Д = ' + str(D_BLUE)
     spectr_razlozh(flat_red, 'Красный спектр', data_red)
     spectr_razlozh(flat_green, 'Зеленый спектр', data_green)
     spectr_razlozh(flat_blue, 'Синий спектр', data_blue)
+
     MO_BRIGHT = round(stat.mean(flat_gray), 4)
     D_BRIGHT = round(stat.variance(flat_gray), 4)
     print('Мат ожидание яркости = ', MO_BRIGHT)
@@ -149,35 +157,49 @@ def sravn_analyz(img1, img2):
     # Вычисление данных
     MO_RED1 = round(stat.mean(flat_red1), 4)
     D_RED1 = round(stat.variance(flat_red1), 4)
+
     MO_GREEN1 = round(stat.mean(flat_green1), 4)
     D_GREEN1 = round(stat.variance(flat_green1), 4)
+
     MO_BLUE1 = round(stat.mean(flat_blue1), 4)
     D_BLUE1 = round(stat.variance(flat_blue1), 4)
+
     MO_BRIGHT1 = round(stat.mean(flat_gray1), 4)
     D_BRIGHT1 = round(stat.variance(flat_gray1), 4)
+
     MO_RED2 = round(stat.mean(flat_red2), 4)
     D_RED2 = round(stat.variance(flat_red2), 4)
+
     MO_GREEN2 = round(stat.mean(flat_green2), 4)
     D_GREEN2 = round(stat.variance(flat_green2), 4)
+
     MO_BLUE2 = round(stat.mean(flat_blue2), 4)
     D_BLUE2 = round(stat.variance(flat_blue2), 4)
+
     MO_BRIGHT2 = round(stat.mean(flat_gray2), 4)
     D_BRIGHT2 = round(stat.variance(flat_gray2), 4)
 
     print('Мат ожидание красного спектра первого изображения = ', MO_RED1)
     print('Дисперсия красного спектра первого изображения = ', D_RED1)
+
     print('Мат ожидание зеленого спектра первого изображения = ', MO_GREEN1)
     print('Дисперсия красного спектра первого изображения = ', D_GREEN1)
+
     print('Мат ожидание синего спектра первого изображения = ', MO_BLUE1)
     print('Дисперсия синего спектра первого изображения = ', D_BLUE1)
+
     print('Мат ожидание яркости первого изображения = ', MO_BRIGHT1)
     print('Дисперсия яркости первого изображения = ', D_BRIGHT1)
+
     print('Мат ожидание красного спектра второго изображения = ', MO_RED2)
     print('Дисперсия красного спектра второго изображения = ', D_RED2)
+
     print('Мат ожидание зеленого спектра второго изображения = ', MO_GREEN2)
     print('Дисперсия красного спектра второго изображения = ', D_GREEN2)
+
     print('Мат ожидание синего спектра второго изображения = ', MO_BLUE2)
     print('Дисперсия красного спектра второго изображения = ', D_BLUE2)
+
     print('Мат ожидание яркости второго изображения = ', MO_BRIGHT2)
     print('Дисперсия яркости второго изображения = ', D_BRIGHT2)
 
@@ -224,8 +246,8 @@ def sravn_analyz(img1, img2):
 
     # круто, но нихера не понтно))
 
-    data_red = "МО_1 = " + str(MO_RED1) + '\n' + 'Д_1 = ' + str(D_RED1) + "\nМО_2 = " + str(MO_RED2) + '\n' + 'Д_2 = ' + \
-               str(D_RED2) + '\n' + string_red
+    data_red = "МО_1 = " + str(MO_RED1) + '\n' + 'Д_1 = ' + str(D_RED1) + "\nМО_2 = " + str(MO_RED2) + '\n' +\
+               'Д_2 = ' + str(D_RED2) + '\n' + string_red
     data_green = "МО_1 = " + str(MO_GREEN1) + '\n' + 'Д_1 = ' + str(D_GREEN1) + "\nМО_2 = " + str(MO_GREEN2) + '\n' + \
                  'Д_2 = ' + str(D_GREEN2) + '\n' + string_green
     data_blue = "МО_1 = " + str(MO_BLUE1) + '\n' + 'Д_1 = ' + str(D_BLUE1) + "\nМО_2 = " + str(MO_BLUE2) + '\n' + \
