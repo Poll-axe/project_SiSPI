@@ -1,3 +1,5 @@
+import os
+
 import matplotlib.pyplot as pyp
 import numpy as np
 from pandas import Series, qcut
@@ -17,7 +19,6 @@ def resize(image, height, weight):
     :param weight: ширина
     """
     dim = (weight, int(height))
-    #  третий параметр какой-то алгоритм масштабирования
     return cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
 
 
@@ -244,8 +245,6 @@ def sravn_analyz(img1, img2):
         print()
         string_bright += '\n'
 
-    # круто, но нихера не понтно))
-
     data_red = "МО_1 = " + str(MO_RED1) + '\n' + 'Д_1 = ' + str(D_RED1) + "\nМО_2 = " + str(MO_RED2) + '\n' +\
                'Д_2 = ' + str(D_RED2) + '\n' + string_red
     data_green = "МО_1 = " + str(MO_GREEN1) + '\n' + 'Д_1 = ' + str(D_GREEN1) + "\nМО_2 = " + str(MO_GREEN2) + '\n' + \
@@ -261,20 +260,49 @@ def sravn_analyz(img1, img2):
     spectr_razlozh_for_two(flat_gray1, flat_gray2, 'Спектр яркости', data_bright)
 
 
+def load_image():
+    """
+    Считывает путь до файла, проверяет создан ли он, является ли файлом и имеет
+    расширение .jpg
+    :return: возвращает объекти типа image в случае успеха и пустой False иначе
+    """
+    testpath = input('Введите адрес: ')
+    if os.path.exists(testpath):
+        if os.path.isfile(testpath):
+            if testpath.endswith(('.JPG', '.jpg', '.jpeg')):
+                return imread(testpath)
+            else:
+                print("файл должен иметь расширение .jpg")
+        else:
+            print("Это не файл")
+    else:
+        print("Данного пути не существует")
+    return False
+
+
 def one_image():
-    img = imread("C:\\Users\DellPC\Desktop\Example1.jpg")
-    analyz(img)
+    img = load_image()
+    if img:
+        analyz(img)
+    else:
+        print("Ошибка")
 
 
 def one_cut_image():
-    img = imread("C:\\Users\DellPC\Desktop\Example1.jpg")
-    analyz(cut_image(img))
+    img = load_image()
+    if img:
+        analyz(cut_image(img))
+    else:
+        print("Ошибка")
 
 
 def two_image():
-    img1 = imread("C:\\Users\DellPC\Desktop\Example1.jpg")
-    img2 = imread("C:\\Users\DellPC\Desktop\Example2.jpg")
-    sravn_analyz(img1, img2)
+    img1 = load_image()
+    img2 = load_image()
+    if img1 and img2:
+        sravn_analyz(img1, img2)
+    else:
+        print("Ошибка")
 
 
 def otvet():
@@ -282,7 +310,7 @@ def otvet():
 
 
 if __name__ == '__main__':
-    COMMAND = {'1': one_image, '2': one_cut_image, '3': two_image}  # чё это за извращение? )))
+    COMMAND = {'1': one_image, '2': one_cut_image, '3': two_image}
     answer = input('1.Обработка одного изображения\n'
                    '2.Обработка выделенной области изображения\n'
                    '3.Совместная обработка 2 изображений\n')
