@@ -118,11 +118,24 @@ def analyz(img):
 
 def sravn_analyz(img1, img2):
     # считывание и получение информации
+    height1 = img1.shape[0]
+    weight1 = img1.shape[1]
+
+    height2 = img2.shape[0]
+    weight2 = img2.shape[1]
+
+    height = min(height1, height2)
+    weight = min(weight1, weight2)
+
+    img1 = resize(img1, height, weight)
+    img2 = resize(img2, height, weight)
+
     imgf1 = img_as_float(img1)
     pyp.subplot(231), pyp.imshow(img1, 'gray'), pyp.title('Kартинка 1')
 
     pyp.tick_params(axis='both', labelleft=False,
                     labelright=False, labelbottom=False)
+    pyp.savefig("C:\\Users\DellPC\Documents\\file.JPG",)
     pyp.show()
 
     # получение каналов изображения
@@ -136,6 +149,7 @@ def sravn_analyz(img1, img2):
     flat_blue1 = blue1.ravel()
     truegray1 = skimage.color.rgb2grey(imgf1)
     flat_gray1 = truegray1.ravel()
+
     imgf2 = img_as_float(img2)
     pyp.subplot(231), pyp.imshow(img2, 'gray'), pyp.title('Kартинка 2')
 
@@ -299,7 +313,7 @@ def one_cut_image():
 def two_image():
     img1 = load_image()
     img2 = load_image()
-    if img1 and img2:
+    if not(isinstance(img1, bool) or isinstance(img2, bool)):
         sravn_analyz(img1, img2)
     else:
         print("Ошибка")
