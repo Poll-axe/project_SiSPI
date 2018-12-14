@@ -1,4 +1,5 @@
 import os
+from time import sleep
 
 import matplotlib.pyplot as pyp
 import numpy as np
@@ -282,8 +283,13 @@ def load_image():
     """
     while(True):
         test_path = input('Введите путь до изображения: ')
+
         if test_path == 'end':
+            print("Выход из меню ввода")
+            sleep(2)
+            print("Завершение работы программы")
             break
+
         if os.path.exists(test_path):
             if os.path.isfile(test_path):
                 if test_path.endswith(('.JPG', '.jpg', '.jpeg')):
@@ -294,6 +300,7 @@ def load_image():
                 print("Это не файл")
         else:
             print("Данного пути не существует, попробуйте ещё раз или введте end для того чтобы закончить")
+
     return False
 
 
@@ -302,7 +309,7 @@ def one_image():
     if img:
         analyz(img)
     else:
-        print("Ошибка")
+        print("Ошибка при открытии файла")
 
 
 def one_cut_image():
@@ -310,7 +317,7 @@ def one_cut_image():
     if img:
         analyz(cut_image(img))
     else:
-        print("Ошибка")
+        print("Ошибка при открытии файла")
 
 
 def two_image():
@@ -319,7 +326,7 @@ def two_image():
     if not(isinstance(img1, bool) or isinstance(img2, bool)):
         sravn_analyz(img1, img2)
     else:
-        print("Ошибка")
+        print("Ошибка при открытии файла")
 
 
 def otvet():
