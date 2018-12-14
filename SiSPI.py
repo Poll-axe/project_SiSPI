@@ -281,15 +281,25 @@ def sravn_analyz(img1, img2):
 def save_path():
     while True:
         global PATH
-        PATH = input('Введите путь до папки, где сохранить результаты работы программы: ')
-        if PATH == 'end':
+        print("Путь по умолчанию: C:\\Users\Public\Pictures")
+        print("Введите end что бы прекратить ввод или Enter что бы выбрать путь по умолчанию\n или")
+        PATH_new = input('Введите путь до папки, где сохранить результаты работы программы: ')
+        if PATH_new == 'end':
             print("Выход из меню ввода")
             sleep(2)
             print("Завершение работы программы")
             break
+        print(PATH_new)
+        if PATH_new == '':
+            if os.path.exists(PATH):
+                if os.path.isdir(PATH):
+                    print("Выбран путь по умолчанию")
+                    return True
+        print("К сожалению путь по умолчанию не поддерживается на вашем компьютере, введите сами")
 
-        if os.path.exists(PATH):
-            if os.path.isdir(PATH):
+        if os.path.exists(PATH_new):
+            if os.path.isdir(PATH_new):
+                    PATH = PATH_new
                     return True
             else:
                 print("Это не папка")
@@ -358,7 +368,7 @@ def otvet():
 
 
 # путь для сохранения файлов
-PATH = "C:\\Users\DellPC\Documents"
+PATH = "C:\\Users\Documents"
 if __name__ == '__main__':
 
     if save_path():
