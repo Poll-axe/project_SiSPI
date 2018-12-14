@@ -29,6 +29,8 @@ def spectr_razlozh(flat_array, name_title, data):
     pyp.xlim([-0.2, 1.2])  # установка ограничений на ось х
     ts.plot(kind='kde', title=name_title)
     pyp.text(-0.1, 26, data)
+    name = 'spectr_razlozh' + name_title + '.jpg'
+    pyp.savefig(PATH + '\\' + name)
     pyp.show()
 
 
@@ -41,6 +43,8 @@ def spectr_razlozh_for_two(flat_array1, flat_array2, name_title, data):
     ts2.plot(kind='kde')
     pyp.legend(('Изображение 1', 'Изображение 2'), loc='best')
     pyp.text(-0.1, 26, data)
+    name = 'spectr_razlozh_for_two' + name_title + '.jpg'
+    pyp.savefig(PATH + "\\" + name)
     pyp.show()
 
 
@@ -136,7 +140,6 @@ def sravn_analyz(img1, img2):
 
     pyp.tick_params(axis='both', labelleft=False,
                     labelright=False, labelbottom=False)
-    # pyp.savefig("C:\\Users\DellPC\Documents\\file.JPG",)
     pyp.show()
 
     # получение каналов изображения
@@ -260,7 +263,7 @@ def sravn_analyz(img1, img2):
         print()
         string_bright += '\n'
 
-    data_red = "МО_1 = " + str(MO_RED1) + '\n' + 'Д_1 = ' + str(D_RED1) + "\nМО_2 = " + str(MO_RED2) + '\n' +\
+    data_red = "МО_1 = " + str(MO_RED1) + '\n' + 'Д_1 = ' + str(D_RED1) + "\nМО_2 = " + str(MO_RED2) + '\n' + \
                'Д_2 = ' + str(D_RED2) + '\n' + string_red
     data_green = "МО_1 = " + str(MO_GREEN1) + '\n' + 'Д_1 = ' + str(D_GREEN1) + "\nМО_2 = " + str(MO_GREEN2) + '\n' + \
                  'Д_2 = ' + str(D_GREEN2) + '\n' + string_green
@@ -275,13 +278,34 @@ def sravn_analyz(img1, img2):
     spectr_razlozh_for_two(flat_gray1, flat_gray2, 'Спектр яркости', data_bright)
 
 
+def save_path():
+    while True:
+        global PATH
+        PATH = input('Введите путь до папки, где сохранить результаты работы программы: ')
+        if PATH == 'end':
+            print("Выход из меню ввода")
+            sleep(2)
+            print("Завершение работы программы")
+            break
+
+        if os.path.exists(PATH):
+            if os.path.isdir(PATH):
+                    return True
+            else:
+                print("Это не папка")
+        else:
+            print("Данного пути не существует, попробуйте ещё раз или введте end для того чтобы закончить")
+
+    return False
+
+
 def load_image():
     """
     Считывает путь до файла, проверяет создан ли он, является ли файлом и имеет
     расширение .jpg
     :return: возвращает объекти типа image в случае успеха и пустой False иначе
     """
-    while(True):
+    while True:
         test_path = input('Введите путь до изображения: ')
 
         if test_path == 'end':
@@ -306,7 +330,7 @@ def load_image():
 
 def one_image():
     img = load_image()
-    if img:
+    if not (isinstance(img, bool)):
         analyz(img)
     else:
         print("Ошибка при открытии файла")
@@ -314,7 +338,7 @@ def one_image():
 
 def one_cut_image():
     img = load_image()
-    if img:
+    if not (isinstance(img, bool)):
         analyz(cut_image(img))
     else:
         print("Ошибка при открытии файла")
@@ -323,7 +347,7 @@ def one_cut_image():
 def two_image():
     img1 = load_image()
     img2 = load_image()
-    if not(isinstance(img1, bool) or isinstance(img2, bool)):
+    if not (isinstance(img1, bool) or isinstance(img2, bool)):
         sravn_analyz(img1, img2)
     else:
         print("Ошибка при открытии файла")
@@ -333,10 +357,16 @@ def otvet():
     print('Такой функции нет.')
 
 
+# путь для сохранения файлов
+PATH = "C:\\Users\DellPC\Documents"
 if __name__ == '__main__':
-    COMMAND = {'1': one_image, '2': one_cut_image, '3': two_image}
-    answer = input('1.Обработка одного изображения\n'
-                   '2.Обработка выделенной области изображения\n'
-                   '3.Совместная обработка 2 изображений\n')
-    client_handler = COMMAND.get(answer, otvet)
-    client_handler()
+
+    if save_path():
+        COMMAND = {'1': one_image, '2': one_cut_image, '3': two_image}
+        answer = input('1.Обработка одного изображения\n'
+                       '2.Обработка выделенной области изображения\n'
+                       '3.Совместная обработка 2 изображений\n')
+        print("Пожалуйста ожидайте, как только вычисления закончатся мы сообщим вам об этом")
+        client_handler = COMMAND.get(answer, otvet)
+        client_handler()
+    print("Готово")
