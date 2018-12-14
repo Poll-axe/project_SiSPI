@@ -135,7 +135,7 @@ def sravn_analyz(img1, img2):
 
     pyp.tick_params(axis='both', labelleft=False,
                     labelright=False, labelbottom=False)
-    pyp.savefig("C:\\Users\DellPC\Documents\\file.JPG",)
+    # pyp.savefig("C:\\Users\DellPC\Documents\\file.JPG",)
     pyp.show()
 
     # получение каналов изображения
@@ -280,17 +280,20 @@ def load_image():
     расширение .jpg
     :return: возвращает объекти типа image в случае успеха и пустой False иначе
     """
-    testpath = input('Введите адрес: ')
-    if os.path.exists(testpath):
-        if os.path.isfile(testpath):
-            if testpath.endswith(('.JPG', '.jpg', '.jpeg')):
-                return imread(testpath)
+    while(True):
+        test_path = input('Введите путь до изображения: ')
+        if test_path == 'end':
+            break
+        if os.path.exists(test_path):
+            if os.path.isfile(test_path):
+                if test_path.endswith(('.JPG', '.jpg', '.jpeg')):
+                    return imread(test_path)
+                else:
+                    print("файл должен иметь расширение .jpg")
             else:
-                print("файл должен иметь расширение .jpg")
+                print("Это не файл")
         else:
-            print("Это не файл")
-    else:
-        print("Данного пути не существует")
+            print("Данного пути не существует, попробуйте ещё раз или введте end для того чтобы закончить")
     return False
 
 
