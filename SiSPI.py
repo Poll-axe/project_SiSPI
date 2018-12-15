@@ -98,13 +98,15 @@ def analyz(img):
     print('Мат ожидание синего спектра = ', MO_BLUE)
     print('Дисперсия синего спектра = ', D_BLUE)
     print('Cov matrix')
-
+    data_cov = '\nМатрица ковариации каналов \n'
     COV_MATRIX = np.cov([flat_red, flat_green, flat_blue])
     for string in range(COV_MATRIX.__len__()):
         for item in range(COV_MATRIX[string].__len__()):
             COV_MATRIX[string][item].__round__(4)
+            data_cov += "{0:.4f}".format(COV_MATRIX[string][item]) + '   '
             print("{0:.4f}".format(COV_MATRIX[string][item]), end='    ')
         print()
+        data_cov += '\n'
 
     data_red = "МО = " + str(MO_RED) + '\n' + 'Д = ' + str(D_RED)
     data_green = "МО = " + str(MO_GREEN) + '\n' + 'Д = ' + str(D_GREEN)
@@ -117,7 +119,7 @@ def analyz(img):
     D_BRIGHT = round(stat.variance(flat_gray), 4)
     print('Мат ожидание яркости = ', MO_BRIGHT)
     print('Дисперсия яркости = ', D_BRIGHT)
-    data_bright = "МО = " + str(MO_BRIGHT) + '\n' + 'Д = ' + str(D_BRIGHT)
+    data_bright = "МО = " + str(MO_BRIGHT) + '\n' + 'Д = ' + str(D_BRIGHT) + data_cov
     spectr_razlozh(flat_gray, 'Спектр яркости', data_bright)
 
 
@@ -295,7 +297,8 @@ def save_path():
                 if os.path.isdir(PATH):
                     print("Выбран путь по умолчанию")
                     return True
-        print("К сожалению путь по умолчанию не поддерживается на вашем компьютере, введите сами")
+            else:
+                print("К сожалению путь по умолчанию не поддерживается на вашем компьютере, введите сами")
 
         if os.path.exists(PATH_new):
             if os.path.isdir(PATH_new):
