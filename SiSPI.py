@@ -281,7 +281,7 @@ def sravn_analyz(img1, img2):
 def save_path():
     while True:
         global PATH
-        print("Путь по умолчанию: C:\\Users\Public\Pictures")
+        print("Путь по умолчанию: C:\\Users\\Public\\Pictures")
         print("Введите end что бы прекратить ввод или Enter что бы выбрать путь по умолчанию\n или")
         PATH_new = input('Введите путь до папки, где сохранить результаты работы программы: ')
         if PATH_new == 'end':
@@ -368,9 +368,8 @@ def otvet():
 
 
 # путь для сохранения файлов
-PATH = "C:\\Users\Documents"
+PATH = "C:\\Users\\Public\\Pictures"
 if __name__ == '__main__':
-
     if save_path():
         COMMAND = {'1': one_image, '2': one_cut_image, '3': two_image}
         answer = input('1.Обработка одного изображения\n'
