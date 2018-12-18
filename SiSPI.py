@@ -60,7 +60,7 @@ def cut_image(img):
 
 def analyz(img):
     # считывание и получение информации
-    imgf = img_as_float(img)
+    img_f = img_as_float(img)
     pyp.subplot(231), pyp.imshow(img, 'gray'), pyp.title('Картинка')
 
     pyp.tick_params(axis='both', labelleft=False,
@@ -68,9 +68,9 @@ def analyz(img):
     pyp.show()
 
     # получение каналов изображения
-    red = imgf[:, :, 0]
-    green = imgf[:, :, 1]
-    blue = imgf[:, :, 2]
+    red = img_f[:, :, 0]
+    green = img_f[:, :, 1]
+    blue = img_f[:, :, 2]
 
     # перевод канналов в одномерные массивы
     flat_red = red.ravel()
@@ -78,48 +78,48 @@ def analyz(img):
     flat_blue = blue.ravel()
 
     # получение яркости изображения
-    truegray = skimage.color.rgb2grey(imgf)
+    truegray = skimage.color.rgb2grey(img_f)
     flat_gray = truegray.ravel()
-    MO_RED = round(stat.mean(flat_red), 4)
-    D_RED = round(stat.variance(flat_red), 4)
+    mo_red = round(stat.mean(flat_red), 4)
+    d_red = round(stat.variance(flat_red), 4)
 
-    MO_GREEN = round(stat.mean(flat_green), 4)
-    D_GREEN = round(stat.variance(flat_green), 4)
+    mo_green = round(stat.mean(flat_green), 4)
+    d_green = round(stat.variance(flat_green), 4)
 
-    MO_BLUE = round(stat.mean(flat_blue), 4)
-    D_BLUE = round(stat.variance(flat_blue), 4)
+    mo_blue = round(stat.mean(flat_blue), 4)
+    d_blue = round(stat.variance(flat_blue), 4)
 
-    print('Мат ожидание красного спектра = ', MO_RED)
-    print('Дисперсия красного спектра = ', D_RED)
+    print('Мат ожидание красного спектра = ', mo_red)
+    print('Дисперсия красного спектра = ', d_red)
 
-    print('Мат ожидание зеленого спектра = ', MO_GREEN)
-    print('Дисперсия красного спектра = ', D_GREEN)
+    print('Мат ожидание зеленого спектра = ', mo_green)
+    print('Дисперсия красного спектра = ', d_green)
 
-    print('Мат ожидание синего спектра = ', MO_BLUE)
-    print('Дисперсия синего спектра = ', D_BLUE)
+    print('Мат ожидание синего спектра = ', mo_blue)
+    print('Дисперсия синего спектра = ', d_blue)
     print('Cov matrix')
     data_cov = '\nМатрица ковариации каналов \n'
-    COV_MATRIX = np.cov([flat_red, flat_green, flat_blue])
-    for string in range(COV_MATRIX.__len__()):
-        for item in range(COV_MATRIX[string].__len__()):
-            COV_MATRIX[string][item].__round__(4)
-            data_cov += "{0:.4f}".format(COV_MATRIX[string][item]) + '   '
-            print("{0:.4f}".format(COV_MATRIX[string][item]), end='    ')
+    cov_matrix = np.cov([flat_red, flat_green, flat_blue])
+    for string in range(cov_matrix.__len__()):
+        for item in range(cov_matrix[string].__len__()):
+            cov_matrix[string][item].__round__(4)
+            data_cov += "{0:.4f}".format(cov_matrix[string][item]) + '   '
+            print("{0:.4f}".format(cov_matrix[string][item]), end='    ')
         print()
         data_cov += '\n'
 
-    data_red = "МО = " + str(MO_RED) + '\n' + 'Д = ' + str(D_RED)
-    data_green = "МО = " + str(MO_GREEN) + '\n' + 'Д = ' + str(D_GREEN)
-    data_blue = "МО = " + str(MO_BLUE) + '\n' + 'Д = ' + str(D_BLUE)
+    data_red = "МО = " + str(mo_red) + '\n' + 'Д = ' + str(d_red)
+    data_green = "МО = " + str(mo_green) + '\n' + 'Д = ' + str(d_green)
+    data_blue = "МО = " + str(mo_blue) + '\n' + 'Д = ' + str(d_blue)
     spectr_razlozh(flat_red, 'Красный спектр', data_red)
     spectr_razlozh(flat_green, 'Зеленый спектр', data_green)
     spectr_razlozh(flat_blue, 'Синий спектр', data_blue)
 
-    MO_BRIGHT = round(stat.mean(flat_gray), 4)
-    D_BRIGHT = round(stat.variance(flat_gray), 4)
-    print('Мат ожидание яркости = ', MO_BRIGHT)
-    print('Дисперсия яркости = ', D_BRIGHT)
-    data_bright = "МО = " + str(MO_BRIGHT) + '\n' + 'Д = ' + str(D_BRIGHT) + data_cov
+    mo_bright = round(stat.mean(flat_gray), 4)
+    d_bright = round(stat.variance(flat_gray), 4)
+    print('Мат ожидание яркости = ', mo_bright)
+    print('Дисперсия яркости = ', d_bright)
+    data_bright = "МО = " + str(mo_bright) + '\n' + 'Д = ' + str(d_bright) + data_cov
     spectr_razlozh(flat_gray, 'Спектр яркости', data_bright)
 
 
@@ -153,10 +153,10 @@ def sravn_analyz(img1, img2):
     flat_red1 = red1.ravel()
     flat_green1 = green1.ravel()
     flat_blue1 = blue1.ravel()
-    truegray1 = skimage.color.rgb2grey(imgf1)
-    flat_gray1 = truegray1.ravel()
+    true_gray1 = skimage.color.rgb2grey(imgf1)
+    flat_gray1 = true_gray1.ravel()
 
-    imgf2 = img_as_float(img2)
+    img_f2 = img_as_float(img2)
     pyp.subplot(231), pyp.imshow(img2, 'gray'), pyp.title('Kартинка 2')
 
     pyp.tick_params(axis='both', labelleft=False,
@@ -164,115 +164,115 @@ def sravn_analyz(img1, img2):
     pyp.show()
 
     # получение каналов изображения
-    red2 = imgf2[:, :, 0]
-    green2 = imgf2[:, :, 1]
-    blue2 = imgf2[:, :, 2]
+    red2 = img_f2[:, :, 0]
+    green2 = img_f2[:, :, 1]
+    blue2 = img_f2[:, :, 2]
 
     # перевод канналов в одномерные массивы
     flat_red2 = red2.ravel()
     flat_green2 = green2.ravel()
     flat_blue2 = blue2.ravel()
-    truegray2 = skimage.color.rgb2grey(imgf2)
+    truegray2 = skimage.color.rgb2grey(img_f2)
     flat_gray2 = truegray2.ravel()
 
     # Вычисление данных
-    MO_RED1 = round(stat.mean(flat_red1), 4)
-    D_RED1 = round(stat.variance(flat_red1), 4)
+    mo_red1 = round(stat.mean(flat_red1), 4)
+    d_red1 = round(stat.variance(flat_red1), 4)
 
-    MO_GREEN1 = round(stat.mean(flat_green1), 4)
-    D_GREEN1 = round(stat.variance(flat_green1), 4)
+    mo_green1 = round(stat.mean(flat_green1), 4)
+    d_green1 = round(stat.variance(flat_green1), 4)
 
-    MO_BLUE1 = round(stat.mean(flat_blue1), 4)
-    D_BLUE1 = round(stat.variance(flat_blue1), 4)
+    mo_blue1 = round(stat.mean(flat_blue1), 4)
+    d_blue1 = round(stat.variance(flat_blue1), 4)
 
-    MO_BRIGHT1 = round(stat.mean(flat_gray1), 4)
-    D_BRIGHT1 = round(stat.variance(flat_gray1), 4)
+    mo_bright1 = round(stat.mean(flat_gray1), 4)
+    d_bright1 = round(stat.variance(flat_gray1), 4)
 
-    MO_RED2 = round(stat.mean(flat_red2), 4)
-    D_RED2 = round(stat.variance(flat_red2), 4)
+    mo_red2 = round(stat.mean(flat_red2), 4)
+    d_red2 = round(stat.variance(flat_red2), 4)
 
-    MO_GREEN2 = round(stat.mean(flat_green2), 4)
-    D_GREEN2 = round(stat.variance(flat_green2), 4)
+    mo_green2 = round(stat.mean(flat_green2), 4)
+    d_green2 = round(stat.variance(flat_green2), 4)
 
-    MO_BLUE2 = round(stat.mean(flat_blue2), 4)
-    D_BLUE2 = round(stat.variance(flat_blue2), 4)
+    mo_blue2 = round(stat.mean(flat_blue2), 4)
+    d_blue2 = round(stat.variance(flat_blue2), 4)
 
-    MO_BRIGHT2 = round(stat.mean(flat_gray2), 4)
-    D_BRIGHT2 = round(stat.variance(flat_gray2), 4)
+    mo_bright2 = round(stat.mean(flat_gray2), 4)
+    d_bright2 = round(stat.variance(flat_gray2), 4)
 
-    print('Мат ожидание красного спектра первого изображения = ', MO_RED1)
-    print('Дисперсия красного спектра первого изображения = ', D_RED1)
+    print('Мат ожидание красного спектра первого изображения = ', mo_red1)
+    print('Дисперсия красного спектра первого изображения = ', d_red1)
 
-    print('Мат ожидание зеленого спектра первого изображения = ', MO_GREEN1)
-    print('Дисперсия красного спектра первого изображения = ', D_GREEN1)
+    print('Мат ожидание зеленого спектра первого изображения = ', mo_green1)
+    print('Дисперсия красного спектра первого изображения = ', d_green1)
 
-    print('Мат ожидание синего спектра первого изображения = ', MO_BLUE1)
-    print('Дисперсия синего спектра первого изображения = ', D_BLUE1)
+    print('Мат ожидание синего спектра первого изображения = ', mo_blue1)
+    print('Дисперсия синего спектра первого изображения = ', d_blue1)
 
-    print('Мат ожидание яркости первого изображения = ', MO_BRIGHT1)
-    print('Дисперсия яркости первого изображения = ', D_BRIGHT1)
+    print('Мат ожидание яркости первого изображения = ', mo_bright1)
+    print('Дисперсия яркости первого изображения = ', d_bright1)
 
-    print('Мат ожидание красного спектра второго изображения = ', MO_RED2)
-    print('Дисперсия красного спектра второго изображения = ', D_RED2)
+    print('Мат ожидание красного спектра второго изображения = ', mo_red2)
+    print('Дисперсия красного спектра второго изображения = ', d_red2)
 
-    print('Мат ожидание зеленого спектра второго изображения = ', MO_GREEN2)
-    print('Дисперсия красного спектра второго изображения = ', D_GREEN2)
+    print('Мат ожидание зеленого спектра второго изображения = ', mo_green2)
+    print('Дисперсия красного спектра второго изображения = ', d_green2)
 
-    print('Мат ожидание синего спектра второго изображения = ', MO_BLUE2)
-    print('Дисперсия красного спектра второго изображения = ', D_BLUE2)
+    print('Мат ожидание синего спектра второго изображения = ', mo_blue2)
+    print('Дисперсия красного спектра второго изображения = ', d_blue2)
 
-    print('Мат ожидание яркости второго изображения = ', MO_BRIGHT2)
-    print('Дисперсия яркости второго изображения = ', D_BRIGHT2)
+    print('Мат ожидание яркости второго изображения = ', mo_bright2)
+    print('Дисперсия яркости второго изображения = ', d_bright2)
 
     print('Ковариационная матрица красного спектра 2 изображений')
     string_red = 'Ковариационная матрица\n'
 
-    COV_MATRIX_RED = np.cov([flat_red1, flat_red2])
-    for string in range(COV_MATRIX_RED.__len__()):
-        for item in range(COV_MATRIX_RED[string].__len__()):
-            string_red += "{0:.4f}".format(COV_MATRIX_RED[string][item]) + '    '
-            print("{0:.4f}".format(COV_MATRIX_RED[string][item]), end='    ')
+    cov_matrix_red = np.cov([flat_red1, flat_red2])
+    for string in range(cov_matrix_red.__len__()):
+        for item in range(cov_matrix_red[string].__len__()):
+            string_red += "{0:.4f}".format(cov_matrix_red[string][item]) + '    '
+            print("{0:.4f}".format(cov_matrix_red[string][item]), end='    ')
         print()
         string_red += '\n'
 
     print('Ковариационная матрица зеленого спектра 2 изображений')
     string_green = 'Ковариационная матрица\n'
-    COV_MATRIX_GREEN = np.cov([flat_green1, flat_green2])
-    for string in range(COV_MATRIX_GREEN.__len__()):
-        for item in range(COV_MATRIX_GREEN[string].__len__()):
-            string_green += "{0:.4f}".format(COV_MATRIX_GREEN[string][item]) + '    '
-            print("{0:.4f}".format(COV_MATRIX_GREEN[string][item]), end='    ')
+    cov_matrix_green = np.cov([flat_green1, flat_green2])
+    for string in range(cov_matrix_green.__len__()):
+        for item in range(cov_matrix_green[string].__len__()):
+            string_green += "{0:.4f}".format(cov_matrix_green[string][item]) + '    '
+            print("{0:.4f}".format(cov_matrix_green[string][item]), end='    ')
         print()
         string_green += '\n'
 
     print('Ковариационная матрица синего спектра 2 изображений')
     string_blue = 'Ковариационная матрица\n'
-    COV_MATRIX_BLUE = np.cov([flat_blue1, flat_blue2])
-    for string in range(COV_MATRIX_BLUE.__len__()):
-        for item in range(COV_MATRIX_BLUE[string].__len__()):
-            string_blue += "{0:.4f}".format(COV_MATRIX_BLUE[string][item]) + '  '
-            print("{0:.4f}".format(COV_MATRIX_BLUE[string][item]), end='    ')
+    cov_matrix_blue = np.cov([flat_blue1, flat_blue2])
+    for string in range(cov_matrix_blue.__len__()):
+        for item in range(cov_matrix_blue[string].__len__()):
+            string_blue += "{0:.4f}".format(cov_matrix_blue[string][item]) + '  '
+            print("{0:.4f}".format(cov_matrix_blue[string][item]), end='    ')
         print()
         string_blue += '\n'
 
     print('Ковариационная матрица')
-    COV_MATRIX_BRIGHT = np.cov([flat_gray1, flat_gray2])
+    cov_matrix_bright = np.cov([flat_gray1, flat_gray2])
     string_bright = 'Ковариационная матрица спектра яркости 2 изображений\n'
-    for string in range(COV_MATRIX_BRIGHT.__len__()):
-        for item in range(COV_MATRIX_BRIGHT[string].__len__()):
-            string_bright += "{0:.4f}".format(COV_MATRIX_BRIGHT[string][item]) + '  '
-            print("{0:.4f}".format(COV_MATRIX_BRIGHT[string][item]), end='    ')
+    for string in range(cov_matrix_bright.__len__()):
+        for item in range(cov_matrix_bright[string].__len__()):
+            string_bright += "{0:.4f}".format(cov_matrix_bright[string][item]) + '  '
+            print("{0:.4f}".format(cov_matrix_bright[string][item]), end='    ')
         print()
         string_bright += '\n'
 
-    data_red = "МО_1 = " + str(MO_RED1) + '\n' + 'Д_1 = ' + str(D_RED1) + "\nМО_2 = " + str(MO_RED2) + '\n' + \
-               'Д_2 = ' + str(D_RED2) + '\n' + string_red
-    data_green = "МО_1 = " + str(MO_GREEN1) + '\n' + 'Д_1 = ' + str(D_GREEN1) + "\nМО_2 = " + str(MO_GREEN2) + '\n' + \
-                 'Д_2 = ' + str(D_GREEN2) + '\n' + string_green
-    data_blue = "МО_1 = " + str(MO_BLUE1) + '\n' + 'Д_1 = ' + str(D_BLUE1) + "\nМО_2 = " + str(MO_BLUE2) + '\n' + \
-                'Д_2 = ' + str(D_BLUE2) + '\n' + string_blue
-    data_bright = "МО_1 = " + str(MO_BRIGHT1) + '\n' + 'Д_1 = ' + str(D_BRIGHT1) + "\nМО_2 = " + str(MO_BRIGHT2) + \
-                  '\n' + 'Д_2 = ' + str(D_BRIGHT2) + '\n' + string_bright
+    data_red = "МО_1 = " + str(mo_red1) + '\n' + 'Д_1 = ' + str(d_red1) + "\nМО_2 = " + str(mo_red2) + '\n' + \
+               'Д_2 = ' + str(d_red2) + '\n' + string_red
+    data_green = "МО_1 = " + str(mo_green1) + '\n' + 'Д_1 = ' + str(d_green1) + "\nМО_2 = " + str(mo_green2) + '\n' + \
+                 'Д_2 = ' + str(d_green2) + '\n' + string_green
+    data_blue = "МО_1 = " + str(mo_blue1) + '\n' + 'Д_1 = ' + str(d_blue1) + "\nМО_2 = " + str(mo_blue2) + '\n' + \
+                'Д_2 = ' + str(d_blue2) + '\n' + string_blue
+    data_bright = "МО_1 = " + str(mo_bright1) + '\n' + 'Д_1 = ' + str(d_bright1) + "\nМО_2 = " + str(mo_bright2) + \
+                  '\n' + 'Д_2 = ' + str(d_bright2) + '\n' + string_bright
 
     spectr_razlozh_for_two(flat_red1, flat_red2, 'Красный спектр', data_red)
     spectr_razlozh_for_two(flat_green1, flat_green2, 'Зеленый спектр', data_green)
@@ -285,14 +285,14 @@ def save_path():
         global PATH
         print("Путь по умолчанию: C:\\Users\\Public\\Pictures")
         print("Введите end что бы прекратить ввод или Enter что бы выбрать путь по умолчанию\n или")
-        PATH_new = input('Введите путь до папки, где сохранить результаты работы программы: ')
-        if PATH_new == 'end':
+        path_new = input('Введите путь до папки, где сохранить результаты работы программы: ')
+        if path_new == 'end':
             print("Выход из меню ввода")
             sleep(2)
             print("Завершение работы программы")
             break
-        print(PATH_new)
-        if PATH_new == '':
+        print(path_new)
+        if path_new == '':
             if os.path.exists(PATH):
                 if os.path.isdir(PATH):
                     print("Выбран путь по умолчанию")
@@ -300,9 +300,9 @@ def save_path():
             else:
                 print("К сожалению путь по умолчанию не поддерживается на вашем компьютере, введите сами")
 
-        if os.path.exists(PATH_new):
-            if os.path.isdir(PATH_new):
-                    PATH = PATH_new
+        if os.path.exists(path_new):
+            if os.path.isdir(path_new):
+                    PATH = path_new
                     return True
             else:
                 print("Это не папка")
